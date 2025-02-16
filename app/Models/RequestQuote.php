@@ -16,7 +16,8 @@ class RequestQuote extends Model
         'first_name',
         'last_name',
         'email',
-        'message'
+        'message',
+        'status',
 
     ];
 

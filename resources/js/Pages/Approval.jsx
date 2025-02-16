@@ -1,12 +1,20 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
+import { Head, usePage } from "@inertiajs/react";
 
 export default function Approval() {
+    const { auth, requests } = usePage().props; // Ensure auth is included
+
+    if (!auth.user || auth.user.role !== "admin") {
+        return <h1>Unauthorized</h1>;
+    }
+
+    console.log(requests);
+
     return (
         <AuthenticatedLayout
             header={
                 <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-                    Home
+                    Approval Table
                 </h2>
             }
         >
@@ -18,37 +26,31 @@ export default function Approval() {
                         <div className="p-6 text-gray-900 dark:text-gray-100">
                             <div className="overflow-x-auto">
                                 <table className="table">
-                                    {/* head */}
                                     <thead>
                                         <tr>
-                                            <th></th>
-                                            <th>Name</th>
-                                            <th>Job</th>
-                                            <th>Favorite Color</th>
+                                            <th>ID</th>
+                                            <th>Topic</th>
+                                            <th>Product</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Email</th>
+                                            <th>Message</th>
+                                            <th>Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {/* row 1 */}
-                                        <tr className="bg-base-200">
-                                            <th>1</th>
-                                            <td>Cy Ganderton</td>
-                                            <td>Quality Control Specialist</td>
-                                            <td>Blue</td>
-                                        </tr>
-                                        {/* row 2 */}
-                                        <tr>
-                                            <th>2</th>
-                                            <td>Hart Hagerty</td>
-                                            <td>Desktop Support Technician</td>
-                                            <td>Purple</td>
-                                        </tr>
-                                        {/* row 3 */}
-                                        <tr>
-                                            <th>3</th>
-                                            <td>Brice Swyre</td>
-                                            <td>Tax Accountant</td>
-                                            <td>Red</td>
-                                        </tr>
+                                        {requests.map((row) => (
+                                            <tr key={row.id} className="bg-base-200">
+                                                <th>{row.id}</th>
+                                                <th>{row.topic}</th>
+                                                <th>{row.product}</th>
+                                                <th>{row.first_name}</th>
+                                                <th>{row.last_name}</th>
+                                                <th>{row.email}</th>
+                                                <th>{row.message}</th>
+                                                <th>{row.status}</th>
+                                            </tr>
+                                        ))}
                                     </tbody>
                                 </table>
                             </div>

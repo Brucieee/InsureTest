@@ -18,6 +18,6 @@ class HomeController extends Controller
 
         $requests = RequestQuote::all();
 
-        return Inertia::render ('Approval');
+        return Inertia::render ('Approval', compact('requests'));
     }
 }

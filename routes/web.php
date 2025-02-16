@@ -5,6 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\HomeController;
+use App\Http\Middleware\AdminMiddleware;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -27,5 +28,8 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/home', [HomeController::class, 'home'])->name('home');
 Route::get('/approval', [HomeController::class, 'approval'])->name('approval');
+Route::middleware([AdminMiddleware::class])->group(function () {
+Route::get('/admin/approval', [AdminMiddleware::class, 'approvalPage'])->name('admin.approval');
+});
 
 require __DIR__.'/auth.php';
