@@ -20,4 +20,10 @@ class HomeController extends Controller
 
         return Inertia::render ('Approval', compact('requests'));
     }
+
+    public function products(){
+        
+
+        return Inertia::render ('Products');
+    }
 }

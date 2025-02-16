@@ -4,10 +4,16 @@ import { Head, usePage } from "@inertiajs/react";
 export default function Approval() {
     const { auth, requests } = usePage().props; // Ensure auth is included
 
+    // if (!auth.user || auth.user.role !== "admin") {
+    //     return ;
+    // }
+
+
     if (!auth.user || auth.user.role !== "admin") {
-        return <h1>Unauthorized</h1>;
+        return ;
     }
 
+    
     console.log(requests);
 
     return (

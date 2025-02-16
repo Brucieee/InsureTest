@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\HomeController;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Controllers\InquiryController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -16,9 +17,9 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/home', function () {
+    return Inertia::render('Home');
+})->middleware(['auth', 'verified'])->name('home');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -27,9 +28,12 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/home', [HomeController::class, 'home'])->name('home');
+Route::get('/products', [HomeController::class, 'products'])->name('products');
 Route::get('/approval', [HomeController::class, 'approval'])->name('approval');
 Route::middleware([AdminMiddleware::class])->group(function () {
 Route::get('/admin/approval', [AdminMiddleware::class, 'approvalPage'])->name('admin.approval');
+Route::post('/submit-inquiry', [InquiryController::class, 'store'])->name('inquiries.store');
+
 });
 
 require __DIR__.'/auth.php';

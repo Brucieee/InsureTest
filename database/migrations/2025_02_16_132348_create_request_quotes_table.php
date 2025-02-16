@@ -19,9 +19,8 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email');
-            $table->string('message');
-            $table->string('status');
-
+            $table->text('message'); // Changed to text to handle longer messages
+            $table->string('status')->default('pending'); // Set a default status value
         });
     }
 
