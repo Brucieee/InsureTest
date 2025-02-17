@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\HomeController;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Controllers\RequestQuoteController;
 use App\Http\Controllers\InquiryController;
 
 Route::get('/', function () {
@@ -25,15 +26,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Add the submit-inquiry route here, outside of the admin group
+    
 });
 
 Route::get('/home', [HomeController::class, 'home'])->name('home');
 Route::get('/products', [HomeController::class, 'products'])->name('products');
 Route::get('/approval', [HomeController::class, 'approval'])->name('approval');
-Route::middleware([AdminMiddleware::class])->group(function () {
-Route::get('/admin/approval', [AdminMiddleware::class, 'approvalPage'])->name('admin.approval');
-Route::post('/submit-inquiry', [InquiryController::class, 'store'])->name('inquiries.store');
+Route::post('/submit-inquiry', [RequestQuoteController::class, 'store']);
 
+// Admin routes
+Route::middleware([AdminMiddleware::class])->group(function () {
+    Route::get('/admin/approval', [AdminMiddleware::class, 'approvalPage'])->name('admin.approval');
 });
 
 require __DIR__.'/auth.php';

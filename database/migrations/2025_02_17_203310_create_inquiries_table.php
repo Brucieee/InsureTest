@@ -9,18 +9,17 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('request_quotes', function (Blueprint $table) {
+        Schema::create('inquiries', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
-            $table->string('topic')->default('Product Inquiry');;
+            $table->string('topic');
             $table->string('product');
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email');
-            $table->text('message'); // Changed to text to handle longer messages
-            $table->string('status')->default('pending'); // Set a default status value
+            $table->text('message');
+            $table->timestamps();
         });
     }
 
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('request_quotes');
+        Schema::dropIfExists('inquiries');
     }
 };

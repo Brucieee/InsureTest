@@ -1,14 +1,14 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\RequestQuote;
 use Illuminate\Http\Request;
+use App\Models\Inquiry; // Assuming you have a model for storing inquiries
 
 class InquiryController extends Controller
 {
-    public function store(Request $request)
+    public function submit(Request $request)
     {
-        // Validate the incoming data
+        // Validate the incoming request data
         $validatedData = $request->validate([
             'topic' => 'required|string',
             'product' => 'required|string',
@@ -18,10 +18,10 @@ class InquiryController extends Controller
             'message' => 'required|string',
         ]);
 
-        // Create a new request quote entry in the database
-        $requestQuote = RequestQuote::create($validatedData);
+        // Optionally, save the inquiry to the database
+        Inquiry::create($validatedData);
 
-        // Return a JSON response indicating success
-        return response()->json(['message' => 'Inquiry submitted successfully.', 'data' => $requestQuote], 200);
+        // Respond with a success message
+        return response()->json(['message' => 'Inquiry submitted successfully!']);
     }
 }
