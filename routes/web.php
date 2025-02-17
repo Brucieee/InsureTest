@@ -35,6 +35,9 @@ Route::get('/home', [HomeController::class, 'home'])->name('home');
 Route::get('/products', [HomeController::class, 'products'])->name('products');
 Route::get('/approval', [HomeController::class, 'approval'])->name('approval');
 Route::post('/submit-inquiry', [RequestQuoteController::class, 'store']);
+Route::post('/update-inquiry-status/{id}', [InquiryController::class, 'updateStatus']);
+Route::middleware('auth')->get('/my-inquiries', [InquiryController::class, 'userInquiries']);
+Route::middleware('auth')->post('/update-inquiry-status/{id}', [InquiryController::class, 'updateStatus']);
 
 // Admin routes
 Route::middleware([AdminMiddleware::class])->group(function () {

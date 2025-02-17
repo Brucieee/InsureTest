@@ -24,4 +24,20 @@ class InquiryController extends Controller
         // Respond with a success message
         return response()->json(['message' => 'Inquiry submitted successfully!']);
     }
+
+    // Update the status of the inquiry
+    public function updateStatus(Request $request, $id)
+    {
+        // Validate the incoming request data
+        $request->validate([
+            'status' => 'required|string|in:pending,approved,denied',
+        ]);
+
+        // Find the inquiry by its ID and update the status
+        $inquiry = Inquiry::findOrFail($id);
+        $inquiry->status = $request->status;
+        $inquiry->save();
+
+        return response()->json(['message' => 'Inquiry status updated successfully!']);
+    }
 }
